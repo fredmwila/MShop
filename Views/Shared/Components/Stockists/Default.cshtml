@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MShop.Models.StockistModel>
+
+            @if (Model != null)
+            {
+                foreach (var t in Model)
+                {
+                    <h3>@t.StockistName</h3>
+                    <h4>@t.StockistStreet @t.StockistSuburb @t.StockistCity</h4>
+                    <h4>@t.StockistPhoneNumber</h4>
+                    <br/>
+                }
+            }

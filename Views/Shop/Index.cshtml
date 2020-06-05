@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Shop";
+
+}
+
+@section Banner
+{
+    <div style="background-color:#9dc46d;">
+        <div class="banner2" style="background-image:url(/images/banner.jpg)">
+            <h1>SHOP</h1>
+        </div>
+    </div>
+}
+
+@await Component.InvokeAsync("Categories")
+
+
+<div id="rData">
+    @await Component.InvokeAsync("Products", new { type = @ViewBag.Type, category = @ViewBag.Category })
+</div>

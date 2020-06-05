@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MShop.Models.StockistModel>
+
+
+@{
+    ViewData["Title"] = "View";
+}
+
+@section Banner
+{
+    <div style="background-color:#9dc46d;">
+        <div class="banner2" style="background-image:url(/images/banner.jpg)">
+            <div class="banner2-cell">
+                <h1>A.M.O Retail Stockists</h1>
+                <h2>
+                    Buy our range in store at the following locations.
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="featured-products">
+
+    <div class="products-grid">
+        @if (Model != null)
+        {
+            foreach (var t in Model)
+            {
+                <div class="stockists-container" tabindex="0" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="areas">
+                        <h2>
+                            @t.StockistCity
+                        </h2>
+                        <div class="stockists">
+                            @await Component.InvokeAsync("Stockists", new { area = @t.StockistCity })
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+

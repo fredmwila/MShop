@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MShop</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZn7BbNP3G_cBmy5cxKrs4SSAf1vMRCZQ&callback=initMap&libraries=&v=weekly"
+            defer></script>
+    <script src="~/js/Maps.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/logobanner.jpg" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="navbar-a">Home</span></a></li>
+                    <li>
+                        <div class="navigation">
+
+                            <div>
+                                <a class="navbar-a" href="/Shop">Shop ▾</a>
+                                <br />
+                                <span class="arrow"></span>
+                                <div class="dropdown-content">
+                                    <div style="display:inline-block;">
+                                        <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
+                                            <h3>Shop Online</h3>
+                                            <p>
+                                                Shop for our products in our online store.
+                                            </p>
+                                            <a href="/Shop">
+                                                Shop All ▸
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
+                                            <h3>Categories</h3>
+                                            @await Component.InvokeAsync("Categories")
+                                        </div>
+                                        <div class="dropdown-section">
+                                            <a href="/shop/stockists">
+                                                <h3>Stockists</h3>
+                                            </a>
+                                            <p>
+                                                Shop for our products at your local store.
+                                            </p>
+                                            <a href="/shop/stockists">
+                                                Find a Store ▸
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="navigation">
+                            <div>
+                                <a class="navbar-a" asp-area="" asp-controller="About" asp-action="Index">About ▾</a>
+                                <br />
+                                <span class="arrow"></span>
+                                <div class="dropdown-content">
+                                    <div style="display:inline-block;">
+                                        <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
+                                            <a href="/about/">
+
+                                                <h3>About Us</h3>
+                                            </a>
+                                            <p>
+                                                Learn more about us.
+                                            </p>
+                                            <a href="/about">
+                                                <b>READ MORE ▸</b>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
+
+                                            <a href="/about/manuka">
+                                                <h3>About Manuka</h3>
+                                            </a>
+                                            <div class="about">
+                                                <a href="/about/manukaoilproduction">
+                                                    Manuka Oil Production
+                                                </a>
+                                                <a href="/about/manukaoilchemistry">
+                                                    Manuka Oil Chemistry
+                                                </a>
+
+                                            </div>
+                                            <a href="/about/manuka">
+                                                <b>READ MORE ▸</b>
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-section">
+                                            <a href="/about/arapaoa">
+                                                <h3>Arapaoa Island</h3>
+                                                <img src="~/images/ArapawaMap.gif" width="200px" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact"><span class="navbar-a">Contact</span></a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Search"><span class="navbar-a">Search</span></a></li>
+                </ul>
+                <partial name="_LoginPartial" />
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a asp-area="" asp-controller="cart" asp-action="Index">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    @RenderSection("banner", required: false)
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        @{
+
+
+        }
+    </div>
+
+    @RenderSection("widesection", required: false)
+
+    <h1>Featured Products</h1>
+
+    @await Component.InvokeAsync("Products", new { type = "featured" })
+    <footer>
+        <p>&copy; 2020 - MShop</p>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        AOS.init();
+
+    </script>
+</body>
+</html>

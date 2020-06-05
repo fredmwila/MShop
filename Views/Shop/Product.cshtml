@@ -1,0 +1,47 @@
+﻿@model dynamic
+
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+
+<div>
+
+
+    <div class="left">
+        <img src='@Model.Product.ProductImage' />
+    </div>
+
+    <div class="right"></div>
+    <h1>@Model.Product.ProductName</h1>
+    <p>
+        @Model.Product.ProductLongDesc
+    </p>
+    <h3>Uses</h3>
+    <p>
+        @Model.Product.ProductUses
+    </p>
+    <h3>
+        About the ingredients
+    </h3>
+    <p>
+        @Model.Product.ProductIngredients
+    </p>
+    <h3>Packaging</h3>
+    <p>
+        @Model.Product.ProductPackaging
+    </p>
+
+
+    @using (Html.BeginForm("buy", "cart", new { id = @Model.Product.ProductId }, FormMethod.Post))
+    {
+        <input type="number" value="1" min="1" name="Quantity" id="quantity" />
+        <input class="cart-btn" type="submit" value="Add To Cart">
+        
+    }
+
+
+</div>
+

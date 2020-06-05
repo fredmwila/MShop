@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MShop.Models.CategoryModel>
+
+    <div class="products-grid">
+        @if (Model != null)
+        {
+            foreach (var t in Model)
+            {
+
+                //Give each category a unique div id, a javascript function for loading data, and update the url.
+            <div id="Category-@t.CategoryName.Replace(" ", "-").ToLower()" class="category" onclick="@t.CategoryName.Replace(" ", "").ToLower()Function();update_url('/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()')">
+                <div class="category-container">
+                    <div class="category-text">
+                        <h4>@t.CategoryName</h4>
+                    </div>
+                </div>
+            </div>
+
+            //Generate the function
+    <script>
+                function @t.CategoryName.Replace(" ", "").ToLower()Function() {
+                    $.ajax({
+                        //get data
+                        url: "/Shop/GetProductsViewComponent",
+                            type: "GET",
+                                data: {
+                            "viewtype": "category",
+                            "category": "@t.CategoryName"
+                    },
+                    success: function (data) {
+                        //if not on products page redirect, other wise add data to page
+                        if ($("#rData").length === 0) {
+                            window.location.href = "/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()";
+                        }
+                        else {
+                            //add data to page
+                            $('#rData').html(data);
+                            //initialise fade in effects
+                            AOS.init();
+                        }
+                },
+                error: function (data) {
+                    $("#rData").text("error <br/>" + data);
+                }
+                });
+                return false;
+                    }
+    </script>
+            }
+        }
+
+    </div>
+
+  

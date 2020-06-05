@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MShop.Models.ProductModel>
+
+    <div class="featured-products">
+        
+        <div class="products-grid">
+            @if (Model != null)
+            {
+                foreach (var t in Model)
+                {
+                    <a href="/Shop/Product/@t.ProductCode">
+                        <div class="product-container" data-aos="fade-up" data-aos-duration="1000">
+                            <div class="product-image-container">
+                                <div class="product-image" style="background-image:url(@t.ProductImage)">
+                                </div>
+
+                            </div>
+                            <br />
+                            <h4>
+                                @t.ProductName
+                                <br />
+                                <br />
+                                <span class="price">$@t.ProductPrice.ToString("F") NZD</span>
+                            </h4>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@t.ProductId" asp-route-quantity="1">
+                                <div class="cart-btn">
+                                    Add To Cart
+                                </div>
+                                </a>
+                        </div>
+                    </a>
+                }
+            }
+
+        </div>
+    </div>
