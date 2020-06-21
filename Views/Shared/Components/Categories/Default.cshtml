@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MShop.Models.CategoryModel>
 
-    <div class="products-grid">
-        @if (Model != null)
+<div class="products-grid">
+    @if (Model != null)
+    {
+        foreach (var t in Model)
         {
-            foreach (var t in Model)
-            {
 
-                //Give each category a unique div id, a javascript function for loading data, and update the url.
-            <div id="Category-@t.CategoryName.Replace(" ", "-").ToLower()" class="category" onclick="@t.CategoryName.Replace(" ", "").ToLower()Function();update_url('/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()')">
+            //Give each category a unique div id, a javascript function for loading data, and update the url.
+            <div id="Category-@t.CategoryName.Replace(" ", "-").ToLower()" class="category" onclick="@t.CategoryName.Replace(" ", "").ToLower()Function();update_url('/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()?culture=@ViewBag.Culture&currency=@ViewBag.Currency')">
                 <div class="category-container">
                     <div class="category-text">
                         <h4>@t.CategoryName</h4>
@@ -15,12 +15,13 @@
                 </div>
             </div>
 
+
             //Generate the function
-    <script>
+<script>
                 function @t.CategoryName.Replace(" ", "").ToLower()Function() {
                     $.ajax({
                         //get data
-                        url: "/Shop/GetProductsViewComponent",
+                        url: "/Shop/GetProductsViewComponent?culture=@ViewBag.Culture&currency=@ViewBag.Currency",
                             type: "GET",
                                 data: {
                             "viewtype": "category",
@@ -29,7 +30,7 @@
                     success: function (data) {
                         //if not on products page redirect, other wise add data to page
                         if ($("#rData").length === 0) {
-                            window.location.href = "/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()";
+                            window.location.href = "/Shop/Index/@t.CategoryName.Replace(" ", "-").ToLower()?culture=@ViewBag.Culture&currency=@ViewBag.Currency";
                         }
                         else {
                             //add data to page
@@ -44,10 +45,10 @@
                 });
                 return false;
                     }
-    </script>
-            }
+</script>
         }
+    }
+</div>
 
-    </div>
+<img src="~/images/pureNZmanuka.png" style="max-width:100%;" />
 
-  

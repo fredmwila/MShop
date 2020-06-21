@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+<div class="cart-table" >
+
+    @foreach (var item in ViewBag.cart)
+    {
+
+    <div class="cart-row">
+        <div class="cart-product">
+            <a asp-controller="shop" asp-action="product" asp-route-id="@item.Product.ProductCode">
+                <div style="width:200px; display:inline-block; text-align:center; float:left;">
+                    <div class="cart-product-image-container">
+                        <div class="cart-product-image" style="background-image:url(@item.Product.ProductImage)">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="cart-item-description">
+                    <h3>@item.Product.ProductName</h3>
+                    <h5>
+                        @item.Product.ProductName - @item.Product.ProductPackaging X @item.Quantity - @((item.Product.ProductPrice * item.Quantity * @ViewBag.ExchangeRate).ToString("c"))
+                    </h5>
+                </div>
+            </a>
+        </div>
+        <div class="cart-item-data">
+            <h4>
+                <span class="price">@((item.Product.ProductPrice * @ViewBag.ExchangeRate).ToString("c"))</span>
+                <div class="quantity">
+                    <input type="number" value="@item.Quantity" min="1" name="Quantity" class="cart-btn, @item.Product.ProductName.Replace(" ", "").ToLower()Quantity" onchange="@item.Product.ProductName.Replace(" ", "").ToLower()QuantityFunction(this.value)" />
+                </div>
+                <span class="price">@((item.Product.ProductPrice * item.Quantity * @ViewBag.ExchangeRate).ToString("c"))</span>
+            </h4>
+
+            <div class="btn-align">
+                <a onclick="@item.Product.ProductName.Replace(" ", "").ToLower()RemoveFunction()">
+
+                    <div class="cancel-btn">X</div>
+                </a>
+            </div>
+        </div>
+    </div>
+ 
+        <script>
+            function @item.Product.ProductName.Replace(" ", "").ToLower()QuantityFunction(quantity) {
+                //var quantity = quantity.value;
+                var updateCartURL = "/cart/buy/@item.Product.ProductId?setQuantity=true&quantity=" + quantity;
+                $.ajax({
+                    //get data
+                    url: updateCartURL,
+                    type: "Post",
+                    success: function (results) {
+                        get_cartTotal();
+                        //@item.Product.ProductName.Replace(" ", "").ToLower()Quantity.value = quantity;
+                       load_cart_data("@ViewBag.Culture");
+
+                        $(".@item.Product.ProductName.Replace(" ", "").ToLower()Quantity").val(quantity);
+                    }
+                });
+            }
+
+            function @item.Product.ProductName.Replace(" ", "").ToLower()RemoveFunction() {
+                //var quantity = quantity.value;
+                var removeProductFromCartURL = "/cart/remove/@item.Product.ProductId";
+                $.ajax({
+                    //get data
+                    url: removeProductFromCartURL,
+                    type: "Post",
+                    success: function (results) {
+                        get_cartTotal();
+                       load_cart_data("@ViewBag.Culture");
+
+                    }
+                });
+            }
+
+        </script>
+    }
+    <div>
+        <h3>
+            Subtotal
+
+            @((ViewBag.total * @ViewBag.ExchangeRate).ToString("c")) @ViewBag.Currency
+        </h3>
+
+    </div>
+
+
+</div>
+

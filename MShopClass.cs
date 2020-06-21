@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dto = MShop.Models;
 using MShop;
+using MShop.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MShop
 {
@@ -52,5 +54,61 @@ namespace MShop
                 }
             return ret;
         }
+
+        public static float RoundUp(float value)
+        {
+            
+            return Convert.ToSingle(Math.Ceiling(value * 20) / 20);
+        }
+
+        public static int RoundDown(int toRound)
+        {
+            return toRound - toRound % 10;
+        }
+
+        public static Dictionary<string,string> currencyList()
+        {
+            Dictionary<string, string> currencyDictionary = new Dictionary<string, string>();
+
+            currencyDictionary.Add("en-nz", "NZD");
+            currencyDictionary.Add("en-au","AUD");
+            currencyDictionary.Add("en-us","USD");
+            currencyDictionary.Add("en-gb","GBP");
+            currencyDictionary.Add("fr-fr","EUR");
+            currencyDictionary.Add("zh-cn", "CNY");
+            currencyDictionary.Add("ja-jp", "JPY");
+            return currencyDictionary;
+        }
+
+        public static string getCurrency(string culture)
+        {
+            if (currencyList().ContainsKey(culture))
+            {
+                return currencyList()[culture];
+            }
+            else
+            {
+                return "NZD";
+            }
+
+        }
+
+        //public HomeViewModel GetView()
+        //{
+        //    string culture = "en-NZ";
+
+        //    string currency = "NZD";
+
+        //    if (HttpContext.Request.Query["culture"].ToString() != "") culture = HttpContext.Request.Query["culture"].ToString();
+
+        //    if (HttpContext.Request.Query["currency"].ToString() != "") currency = HttpContext.Request.Query["currency"].ToString();
+
+        //    culture = MShopClass.currencyList()[currency.ToUpper()];
+
+        //    HomeViewModel model = new HomeViewModel { Culture = culture, Currency = currency } ;
+
+        //    return model;
+        //}
+
     }
 }

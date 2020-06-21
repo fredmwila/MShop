@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MShop.Models.StockistModel>
+﻿
 
 
 @{
@@ -24,7 +24,7 @@
     <div class="products-grid">
         @if (Model != null)
         {
-            foreach (var t in Model)
+            foreach (var t in ViewBag.Stockists)
             {
                 <div class="stockists-container" tabindex="0" data-aos="fade-up" data-aos-duration="1000">
                     <div class="areas">
