@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@*@model ViewModelBase*@
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MShop</title>
+    <link rel="icon" type="image/gif/png/jpg" href="~/images/icons/logo.jpg">
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -18,16 +23,20 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZn7BbNP3G_cBmy5cxKrs4SSAf1vMRCZQ&callback=initMap&libraries=&v=weekly"
             defer></script>
-    <script src="~/js/Maps.js"></script>
-    <script src="~/js/site.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
+    <script src="~/js/site.js"></script>
+    <script src="~/js/money.js"></script>
+    <script src="~/js/NumberInput.js"></script>
+    <script src="~/js/Cart.js"></script>
+    <script src="~/js/parallax.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="nav-content">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -35,16 +44,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/logobanner.jpg" /></a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/logobanner.jpg" /></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="navbar-a">Home</span></a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index" ><span class="navbar-a">Home</span></a></li>
                     <li>
                         <div class="navigation">
 
                             <div>
-                                <a class="navbar-a" href="/Shop">Shop ▾</a>
+                                <a class="navbar-a" asp-controller="Shop" asp-action="Index" >Shop ▾</a>
                                 <br />
                                 <span class="arrow"></span>
                                 <div class="dropdown-content">
@@ -54,7 +63,7 @@
                                             <p>
                                                 Shop for our products in our online store.
                                             </p>
-                                            <a href="/Shop">
+                                            <a asp-controller="Shop" asp-action="Index" >
                                                 Shop All ▸
                                             </a>
                                         </div>
@@ -63,13 +72,13 @@
                                             @await Component.InvokeAsync("Categories")
                                         </div>
                                         <div class="dropdown-section">
-                                            <a href="/shop/stockists">
+                                            <a asp-controller="Shop" asp-action="Stockists" >
                                                 <h3>Stockists</h3>
                                             </a>
                                             <p>
                                                 Shop for our products at your local store.
                                             </p>
-                                            <a href="/shop/stockists">
+                                            <a asp-controller="Shop" asp-action="Stockists" >
                                                 Find a Store ▸
                                             </a>
                                         </div>
@@ -82,43 +91,43 @@
                     <li>
                         <div class="navigation">
                             <div>
-                                <a class="navbar-a" asp-area="" asp-controller="About" asp-action="Index">About ▾</a>
+                                <a class="navbar-a" asp-area="" asp-controller="About" asp-action="Index" >About ▾</a>
                                 <br />
                                 <span class="arrow"></span>
                                 <div class="dropdown-content">
                                     <div style="display:inline-block;">
                                         <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
-                                            <a href="/about/">
+                                            <a href="/../about/">
 
                                                 <h3>About Us</h3>
                                             </a>
                                             <p>
                                                 Learn more about us.
                                             </p>
-                                            <a href="/about">
+                                            <a href="/../about">
                                                 <b>READ MORE ▸</b>
                                             </a>
                                         </div>
                                         <div class="dropdown-section" style="border-right: 2px solid #9dc46d;">
 
-                                            <a href="/about/manuka">
+                                            <a href="/../about/manuka">
                                                 <h3>About Manuka</h3>
                                             </a>
                                             <div class="about">
-                                                <a href="/about/manukaoilproduction">
+                                                <a href="/../about/manukaoilproduction">
                                                     Manuka Oil Production
                                                 </a>
-                                                <a href="/about/manukaoilchemistry">
+                                                <a href="/../about/manukaoilchemistry">
                                                     Manuka Oil Chemistry
                                                 </a>
 
                                             </div>
-                                            <a href="/about/manuka">
+                                            <a href="/../about/manuka">
                                                 <b>READ MORE ▸</b>
                                             </a>
                                         </div>
                                         <div class="dropdown-section">
-                                            <a href="/about/arapaoa">
+                                            <a href="/../about/arapaoa">
                                                 <h3>Arapaoa Island</h3>
                                                 <img src="~/images/ArapawaMap.gif" width="200px" />
                                             </a>
@@ -128,14 +137,32 @@
                             </div>
                         </div>
                     </li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact"><span class="navbar-a">Contact</span></a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Search"><span class="navbar-a">Search</span></a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Search" ><span class="navbar-a">Search</span></a></li>
                 </ul>
                 <partial name="_LoginPartial" />
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="cart" asp-action="Index">Cart</a></li>
+                    <li><vc:currency-switcher /></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <div class="navigation">
+                            <div>
+                                <a asp-area="" asp-controller="cart" asp-action="Index" ><span id="CartTotal" />@Context.Session.GetInt32("CartCount") Cart  ▾</a>
+                                <br />
+                                <span class="arrow"></span>
+                                <div class="dropdown-content">
+                                    <div class="CartData">
+                                        @await Component.InvokeAsync("ShoppingCart")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
                 </ul>
             </div>
+
         </div>
     </nav>
 
@@ -162,7 +189,7 @@
     </footer>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
+        @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -186,7 +213,10 @@
 
     <script>
         AOS.init();
-
     </script>
+    <script type="text/javascript">
+        load_number_input();
+    </script>
+
 </body>
 </html>

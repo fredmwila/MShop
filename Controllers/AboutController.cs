@@ -16,24 +16,34 @@ namespace MShop.Controllers
 
         public IActionResult Index()
         {
-            return View();
+
+            return this.View();
         }
 
         public IActionResult Manuka()
         {
-            return View();
+
+
+            return this.View();
         }
         public IActionResult ManukaOilProduction()
         {
-            return View();
+         
+
+
+            return this.View();
         }
         public IActionResult ManukaOilChemistry()
         {
-            return View();
+         
+
+
+            return this.View();
         }
         public IActionResult Arapaoa()
         {
-            return View();
+            
+            return this.View();
         }
 
     }

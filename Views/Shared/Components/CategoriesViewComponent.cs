@@ -41,6 +41,19 @@ namespace MShop.Views.Shared.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string type, string category)
         {
+            //string culture = "";
+
+            //string currency = "";
+
+            //currency = HttpContext.Request.Query["currency"].ToString().ToUpper();
+
+            //currency = MShopClass.getCurrency(currency);
+
+            //culture = MShopClass.currencyList()[currency.ToUpper()];
+
+            //ViewBag.Currency = currency;
+            //ViewBag.Culture = culture;
+
             return View(await this.GetCategories());
         }
     }

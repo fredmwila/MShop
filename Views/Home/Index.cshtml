@@ -1,71 +1,99 @@
-﻿@{
+﻿@*@page
+    @using Microsoft.AspNetCore.Localization*@
+
+
+@{
     ViewData["Title"] = "Home Page";
+    //var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>();
+    //var requestCulture = requestCultureFeature.RequestCulture;
 }
+
+
 
 @section Banner
 {
     @*<div class="banner" style="background-image:url(images/banner2.jpg)"></div>*@
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000" style="background-color:#9dc46d;">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <div class="banner" style="background-image:url(images/nature2.jpg); filter:saturate(1.5);"></div>
-                <div class="carousel-caption" role="option">
-                    <p>
+    <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="6000" style="background-color:#9dc46d;">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="banner img-responsive" style="background-image:url(/images/ai2.jpg); filter:saturate(1.5);"></div>
+                    <div class="carousel-caption" role="option">
+                        <div class="banner2-cell">
+                            <h1>
 
-                        Wild-sown trees with no pollution, sprays or chemicals
-                        <br />
-                        <a class="btn btn-default" href="/Home/About">
-                            Learn More
-                        </a>
-                    </p>
+                                Wild-sown trees with no pollution, sprays or chemicals
+                                </h1>
+                                <br />
+                                <a class="carousel-btn" href="/Home/About">
+                                    Learn More
+                                </a>
+                                </div>
+                        </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="banner" style="        background-image: url(images/rsz_1banner2.jpg)"></div>
-                <div class="carousel-caption" role="option">
-                    <p>
-                        All products are blended, mixed and packaged by hand.
-                        <br />
-                        <a class="btn btn-default" href="/Shop">
-                            Our Products
-                        </a>
-                    </p>
+                <div class="item">
+                    <div class="banner" style="background-image:url(/images/hbl.jpg);"></div>
+                    <div class="carousel-caption" role="option">
+                        <div class="banner2-cell">
+                            <h1>
+                                All products are blended, mixed and packaged by hand.
+                                </h1>
+                                <br />
+                                <a class="carousel-btn" href="/Shop">
+                                    Our Products
+                                </a>
+                            
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="banner" style="background-image:url(images/banner.jpg)"></div>
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Healthy natural products that use only plant oils for fragrance, no colouring agents, no parabens and no animal products except beeswax. No animal testing.
-                        <br />
-                        <a class="btn btn-default" href="/Home/About">
-                            Learn More
-                        </a>
-                    </p>
+                <div class="item">
+                    <div class="banner" style="background-image:url(/images/banner5.jpg)"></div>
+                    <div class="carousel-caption" role="option">
+                        <div class="banner2-cell">
+                            <h1>
+                                Healthy natural products that use only plant oils for fragrance, no colouring agents, no parabens and no animal products except beeswax. No animal testing.
+                            </h1>
+                            <br />
+                            <a class="carousel-btn" href="/Home/About">
+                                Learn More
+                            </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+           
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+
+    @*<div class="banner" data-parallax="scroll" data-image-src="/images/banner2.jpg"></div>
+        <div class="carousel-caption" role="option">
+            <p>
+
+                Wild-sown trees with no pollution, sprays or chemicals
+                <br />
+                <a class="btn btn-default" href="/Home/About">
+                    Learn More
+                </a>
+            </h1>
+        </div>*@
 }
 
 <h1>Welcome to the Mānuka Shop at Arapaoa Island Mānuka</h1>
 
+
 @await Component.InvokeAsync("Categories")
 
-<img src="~/images/pureNZmanuka.png" />
 
 @section WideSection
 {
@@ -75,3 +103,8 @@
         <div id="map"></div>
     </div>
 }
+
+@section Scripts
+{
+    <script src="~/js/Maps.js"></script>
+} 

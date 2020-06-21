@@ -9,7 +9,10 @@
     src: url('montserratextrabold-vgo60.ttf') format('truetype');
 }
 
-
+@font-face {
+    font-family: 'MontserratMedium-nRxlJ';
+    src: url('MontserratMedium-nRxlJ.ttf') format('truetype');
+}
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
@@ -40,12 +43,11 @@ h1, h2, h3, h4, h5, h6 {
    
 }
 
-h1, h2 {
-    
+h1, h2, h3, h4 {
     font-family: montserratextrabold-vgo60;
 }
 
-h3, h4, h5, h6 {
+ h5, h6 {
     font-family: MontserratBold-DOWZd;
 }
 
@@ -73,6 +75,11 @@ a:hover {
 }
 
 /* Carousel */
+.carousel-caption {
+    display:table;
+    height:100vh;
+    width:100%
+}
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
@@ -80,15 +87,44 @@ a:hover {
 
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner {
-    clip-path: circle(55% at 50% 56%);
+    /*clip-path: circle(55% at 50% 56%);*/
+}
+
+.carousel-background {
+    background-color: #9dc46d;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+
+.parallax-window {
+    min-height: 400px;
+    background: transparent;
+    overflow:hidden;
+}
+
+@keyframes zoominoutsinglefeatured {
+    0% {
+        transform: scale(1,1);
+    }
+
+    50% {
+        transform: scale(1.5,1.5);
+    }
+
+    100% {
+        transform: scale(1,1);
+    }
 }
 
 
 .banner {
     width: 100%;
-    height:100vh;
+    height: 100vh;
     background-size: cover;
-
+    animation: zoominoutsinglefeatured 30s infinite;
+    display:table;
 }
 
 .banner2 {
@@ -97,7 +133,6 @@ a:hover {
     background-size: cover;
     clip-path: circle(55% at 50% 56%);
     display: table;
-    margin-top: 70px;
 }
 
 .banner2-cell {
@@ -105,6 +140,7 @@ a:hover {
     vertical-align: middle;
     color: white;
     font-weight: bold;
+    padding:200px;
 }
 
 
@@ -126,8 +162,17 @@ a:hover {
             text-align: left;
         }
 
-.price{
-    font-weight:lighter;
+.nav-content {
+    padding:0px 10px 0px 10px;
+}
+
+    .nav-content img {
+        max-width: 100%;
+    }
+
+    .price {
+    /*font-weight: lighter;*/
+    font-family: MontserratMedium-nRxlJ;
 }
 
 .price-btn {
@@ -139,21 +184,51 @@ a:hover {
     padding: 5px;
     clip-path: circle(57% at 50% -15%);
 }
+.currency-dropdown-content {
+    /*display: none;*/
+    top: 100%;
+    transform: translateX(-30%);
+    background: rgb(247, 255, 237);
+    background: rgba(247, 255, 237, 0.8117647058823529);
+    /*padding: 15px;*/
+    text-align: center;
+    backdrop-filter: blur(2px);
+    max-height: 75vh;
+    overflow-y: auto;
+    width: inherit;
+    position: absolute;
+    width: auto;
+      -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    max-height:0px;
+}
 
-/* Dropdown Content (Hidden by Default) */
+
+    /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-    display: none;
+    /*display: none;*/
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    background: #f7ffedcf;
+    background: rgb(247, 255, 237);
+    background: rgba(247, 255, 237, 0.8117647058823529);
     /* border: 2px solid #f1f1f1; */
-    padding: 15px;
+    /*padding: 15px;*/
     text-align: center;
     backdrop-filter: blur(2px);
+    max-height: 75vh;
+    overflow-y: auto;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    max-height: 0px;
 }
+
 
     .dropdown-content p {
         color:black;
@@ -169,29 +244,54 @@ a:hover {
         display: block;
     }
 
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #9dc46d;
-            color: white;
-        }
-
         .dropdown-section {
             display:table-cell;
-            min-width:200px;
             vertical-align:top;
             height:100%;
         }
 
 .navigation {
-    height: 100%;
+    height: 70px;
     color: #9dc46d;
-    padding: 20px;
+    padding: 20px 10px 20px 10px;
+  
 }
 
     .navigation a {
         color: #9dc46d;
         /*display:inline-block;*/
     }
+
+.currency {
+    display: table;
+    padding: 10px;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+}
+
+.currency-dropdown-content a {
+    color: #12713b;
+}
+
+.currency:hover {
+    background-color: rgba(157, 196, 109, 0.4);
+    border-radius: 10%;
+}
+
+        .currency:hover a {
+            color: white;
+        }
+
+.currency-flag {
+    background-size: cover;
+    height: 60px;
+    width: 60px;
+    display: table-cell;
+    vertical-align: middle;
+    
+}
 
     .navbar-a {
         padding:0px;
@@ -249,11 +349,14 @@ a:hover {
 }
 
 /* Show the dropdown menu on hover */
-.navigation:hover .dropdown-content {
+.navigation:hover .dropdown-content, .navigation:hover .currency-dropdown-content {
     display: block;
+    max-height: 75vh;
+    padding: 15px;
 }
 
-.navigation:hover .arrow {
+
+    .navigation:hover .arrow {
     display:unset;
 }
 
@@ -262,12 +365,12 @@ a:hover {
      Just because a vendor prefix is there, doesn't mean it will
      work in a browser made by that vendor either, it's just for
      future-proofing purposes I guess. */
-    ;
+    
     -o-transition: .5s;
     -ms-transition: .5s;
     -moz-transition: .5s;
     -webkit-transition: .5s; /* ...and now for the proper property */
-    ;
+    
     transition: .5s;
 }
 
@@ -299,25 +402,76 @@ a:hover {
     transition: .5s;
 }
 
+
 .product-container:hover + .price-btn, .price-btn:hover {
     background-color: #dbb006;
 }
 
-.product-container:hover {
-    color: #dbb006;
-    /*width: 280px;*/
-    background-color: #9dc46d0d;
-    border-radius:10%;
-}
+    .product-container:hover {
+        color: #dbb006;
+        /*width: 280px;*/
+        background-color: rgba(157, 196, 109, 0.050980392156862744);
+        border-radius: 25px;
+    }
 
     .product-container:hover .product-image {
         height: 300px;
     }
 
-    .product-container:hover .cart-btn, .cart-btn:hover, .category-container:hover {
+.cart-product:hover .cart-product-image {
+    height: 200px;
+}
+
+.cart-product:hover {
+    background-color: #fdfefc;
+    border-radius: 25px;
+}
+
+    .product-container:hover .cart-btn, .cart-btn:hover, .category-container:hover, .carousel-btn:hover {
         background-color: #9dc46d;
         color:white;
     }
+
+.cancel-btn {
+    color: #30713b;
+    padding: 5px;
+    font-weight: bolder;
+    border-radius: 50%;
+    /* background-color: red; */
+    width: 30px;
+    height: 30px;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+    position: relative;
+    display: table-cell;
+    cursor: pointer;
+    /* margin-left: 10px; */
+    font-size: 1.9em;
+    vertical-align: middle;
+}
+
+div {
+    /*border:5px dashed red;*/
+}
+    .cancel-btn:hover {
+        /*background-color: red;*/
+        /*padding:10px;*/
+        color:red;
+    }
+
+.btn-align {
+    display: inline-table;
+    vertical-align: middle;
+    /* height: 30px; */
+    /* width: 30px; */
+    margin: 10px;
+}
+}
+
+
 
 .category-container h4 {
     color: #9dc46d;
@@ -350,10 +504,32 @@ a:hover {
     vertical-align: bottom;
 }
 
+.cart-product-image {
+    height: 150px;
+    overflow: hidden;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    /* ...and now for the proper property */
+    transition: .5s;
+}
+
+.cart-product-image-container {
+    height: 200px;
+    width: 190px;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+
+
 .category {
     display: inline-block;
-    padding: 10px 20px;
-    margin:10px 20px;
+    padding: 10px 5px;
 }
 
 .category-btn {
@@ -393,6 +569,131 @@ a:hover {
     vertical-align:middle;
 }
 
+.quantity {
+    position: relative;
+    display:inline-flex;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.quantity input {
+    width: 75px;
+    height: 42px;
+    line-height: 1.65;
+    float: left;
+    display: block;
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    border: 1px solid #eee;
+}
+
+    .quantity input:focus {
+        outline: 0;
+    }
+
+.quantity-nav {
+    float: left;
+    position: relative;
+    height: 42px;
+}
+
+.quantity-button {
+    position: relative;
+    cursor: pointer;
+    border-left: 1px solid #eee;
+    width: 20px;
+    text-align: center;
+    color: #333;
+    font-size: 13px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+    line-height: 1.7;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+    .quantity-button.quantity-up {
+        position: absolute;
+        height: 50%;
+        top: 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .quantity-button.quantity-down {
+        position: absolute;
+        bottom: -1px;
+        height: 50%;
+    }
+
+.cart-table {
+    text-align:center;
+}
+
+.cart-row {
+    padding: 10px;
+    margin:10px;
+    display: inline-table;
+   
+    width: 95%;
+    background-color: rgba(157, 196, 109, 0.050980392156862744);
+    border-radius: 25px;
+}
+
+.cart-product {
+    width: calc(100% - 400px);
+    display: inline-block;
+    text-align: left;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+
+    .cart-product h3 {
+        display: inline-block;
+    }
+
+    .cart-item-data {
+    width:400px;
+    display:inline-block;
+}
+
+.cart-item-data span {
+    padding:10px;
+}
+
+.cart-item-data h4 {
+    display:inline-block;
+}
+
+.cart-item-description {
+    display: inline-block;
+    width: calc(100% - 200px);
+}
+
+.cart-table table {
+    border-style:none;
+    display:inline-block;
+}
+
+    .cart-table td {
+        padding:20px;
+    }
+
 .cart-btn {
     border: 2px solid #9dc46d;
     color: #9dc46d;
@@ -402,6 +703,68 @@ a:hover {
     background-color:transparent;
     max-width:200px;
 
+}
+
+.carousel-fade .carousel-inner .item {
+    opacity: 0;
+    transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .active {
+    opacity: 1;
+}
+
+    .carousel-fade .carousel-inner .active.left,
+    .carousel-fade .carousel-inner .active.right {
+        left: 0;
+        opacity: 0;
+        z-index: 1;
+    }
+
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+    opacity: 1;
+}
+
+.carousel-fade .carousel-control {
+    z-index: 2;
+}
+
+/*WHAT IS NEW IN 3.3: "Added transforms to improve carousel performance in modern browsers."
+  Need to override the 3.3 new styles for modern browsers & apply opacity*/
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .carousel-fade .carousel-inner > .item.next,
+    .carousel-fade .carousel-inner > .item.active.right {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    .carousel-fade .carousel-inner > .item.prev,
+    .carousel-fade .carousel-inner > .item.active.left {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+        .carousel-fade .carousel-inner > .item.next.left,
+        .carousel-fade .carousel-inner > .item.prev.right,
+        .carousel-fade .carousel-inner > .item.active {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+}
+
+.carousel-btn {
+    border: 2px solid white;
+    color: white;
+    padding: 10px;
+    width: 80%;
+    display: inline-block;
+    background-color: transparent;
+    max-width: 200px;
+    font-size:1.5em;
 }
 
 .arrow {
@@ -415,19 +778,19 @@ a:hover {
     display:none;
 }
 
-    .left {
+    .text-left {
     padding:15px;
     float:left;
     display:block;
 }
 
-.right {
+.text-right {
     padding: 15px;
     float: left;
     display: block;
 }
 
-/* QR code generator */
+ /*QR code generator*/ 
 #qrCode {
     margin: 15px;
 }
@@ -438,10 +801,20 @@ a:hover {
         width: 100%;
     }
 
-    /* Hide/rearrange for smaller screens */
+     /*Hide/rearrange for smaller screens*/ 
     @media screen and (max-width: 767px) {
-        /* Hide captions */
+         /*Hide captions 
         .carousel-caption {
             display: none;
         }
+
+        
     }
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+
+    .dropdown-section > .products-grid > .category {
+        padding: 0px;
+    }
+}

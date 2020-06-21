@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MShop.Models;
 using MySql.Data.MySqlClient;
 using dto = MShop.Models;
+using MShop;
+using System.Threading;
 
 namespace MShop.Views.Shared.Components
 {
@@ -16,8 +19,17 @@ namespace MShop.Views.Shared.Components
         {
             this.MySqlDB = mySqlDatabase;
         }
-        private async Task<List<dto.ProductModel>> GetProducts(string type, string category)
+
+        public string GetCulture = CultureInfo.CurrentCulture.Name;
+        
+
+        private async Task<List<dto.ProductModel>> GetProducts(string type, string category, string dollar)
         {
+            string toCurrency = dollar;
+            Single price = 0;
+            float exchangeRate = 1;
+            if ((toCurrency != "")&&(toCurrency.ToUpper() !="NZD")) exchangeRate = CurrencyConvertor.GetExchangeRate(toCurrency);
+
             if (category != null) category = category.Replace("-", " ");
             var ret = new List<dto.ProductModel>();
 
@@ -40,11 +52,13 @@ namespace MShop.Views.Shared.Components
             using (var reader = await cmd.ExecuteReaderAsync())
                 while (await reader.ReadAsync())
                 {
+                    price = reader.GetFieldValue<Single>(2);
                     var t = new dto.ProductModel()
                     {
-                        ProductId = reader.GetFieldValue<int>(0),
+                        
+                    ProductId = reader.GetFieldValue<int>(0),
                         ProductName = reader.GetFieldValue<string>(1).ToUpper(),
-                        ProductPrice = reader.GetFieldValue<Single>(2),
+                        ProductPrice = price*exchangeRate,
                         ProductImage = reader.GetFieldValue<string>(3),
                         ProductCode = reader.GetFieldValue<string>(4),
                         CategoryID = reader.GetFieldValue<int>(5),
@@ -58,7 +72,32 @@ namespace MShop.Views.Shared.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string type, string category)
         {
-            return View(await this.GetProducts(type, category));
+
+            string culture = "";
+
+            string currency = "";
+
+            //currency = HttpContext.Request.Query["currency"].ToString().ToUpper();
+
+            //currency = MShopClass.getCurrency(currency);
+
+            //culture = MShopClass.currencyList()[currency.ToUpper()];
+
+            //var cultureSet = CultureInfo.GetCultureInfo(culture);
+            //Thread.CurrentThread.CurrentCulture = cultureSet;
+            //Thread.CurrentThread.CurrentUICulture = cultureSet;
+
+            culture = CultureInfo.CurrentCulture.Name.ToLower();
+
+            currency = MShopClass.getCurrency(culture);
+
+            ViewBag.Culture = CultureInfo.CurrentCulture.Name;
+
+
+
+            //System.Diagnostics.Debug.Print("Current Culture: " + culture + ";");
+            ViewBag.Dollar = currency;
+            return View(await this.GetProducts(type, category, currency));
         }
     }
 }

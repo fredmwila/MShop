@@ -6,3 +6,14 @@ function update_url(url) {
 
     history.pushState(null, null, url);
 }
+
+function update_data(id,data) {
+
+    $(id).html(data);
+}
+
+
+
+//function load_number_input() {
+    
+//}

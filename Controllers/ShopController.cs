@@ -13,6 +13,11 @@ namespace MShop.Controllers
 {
     public class  ShopController : Controller
     {
+
+        //public string culture = "en-NZ";
+
+        //public string currency = "NZD";
+
         [HttpGet]
         public IActionResult Index(string ID)
         {
@@ -27,25 +32,31 @@ namespace MShop.Controllers
             }
             ViewBag.Category = ID;
             ViewBag.Type = type;
-            System.Diagnostics.Debug.WriteLine("ID = " + ID);
-            return View();
+            //System.Diagnostics.Debug.WriteLine("ID = " + ID);
+
+            //if (HttpContext.Request.Query["culture"].ToString() != "") culture = HttpContext.Request.Query["culture"].ToString();
+
+            //if (HttpContext.Request.Query["currency"].ToString() != "") currency = HttpContext.Request.Query["currency"].ToString();
+
+            //culture = MShopClass.currencyList()[currency.ToUpper()];
+
+
+            return this.View();
         }
 
         public ActionResult Product(string id)
 
         {
-            dynamic mymodel = new ExpandoObject();
-            mymodel.Product = GetProduct(id);
-           // mymodel.ShoppingCart = GetShoppingCart();
-            Debug.WriteLine("Product Code:" + id);
-            return View(mymodel);
+            ViewBag.ProductID = id;
+            return this.View();
         }
 
         public async Task<IActionResult> Stockists()
 
         {
+            ViewBag.Stockists = await this.GetAreas();
 
-            return View(await this.GetAreas());
+            return this.View();
         }
 
 
@@ -82,36 +93,16 @@ namespace MShop.Controllers
             return ret;
         }
 
-        private dto.ProductModel GetProduct(string productCode)
-        {
-            var ret = new dto.ProductModel();
-
-            var cmd = this.MySqlDB.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT ProductId, ProductName, ProductPrice, ProductImage, ProductCode, ProductLongDesc, ProductUses, ProductIngredients, ProductPackaging FROM Products Where ProductCode='" + productCode +"';";
-
-            using (var reader = cmd.ExecuteReader())
-                while (reader.Read())
-                {
-                    var t = new dto.ProductModel()
-                    {
-                        ProductId = reader.GetFieldValue<int>(0),
-                        ProductName = reader.GetFieldValue<string>(1).ToUpper(),
-                        ProductPrice = reader.GetFieldValue<Single>(2),
-                        ProductImage = reader.GetFieldValue<string>(3),
-                        ProductCode = reader.GetFieldValue<string>(4),
-                        ProductLongDesc = reader.GetFieldValue<string>(5),
-                        ProductUses = reader.GetFieldValue<string>(6),
-                        ProductIngredients = reader.GetFieldValue<string>(7),
-                        ProductPackaging = reader.GetFieldValue<string>(8)
-                    };
-                    ret = t;
-                }
-            return ret;
-        }
+       
 
         public IActionResult GetProductsViewComponent( string viewtype, string category)
         {
             return ViewComponent("Products", new { type = viewtype, category = category });
+        }
+
+        public IActionResult GetProductViewComponent(string id)
+        {
+            return ViewComponent("GetProduct", new { id = id});
         }
 
     }

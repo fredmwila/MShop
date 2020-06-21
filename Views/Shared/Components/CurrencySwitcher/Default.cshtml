@@ -1,0 +1,36 @@
+﻿@model CurrencySwitcherModel
+
+    <div class="navigation">
+       @* <div style="background-image:url(/images/icons/@(ViewBag.Culture).png)" class="currency-flag">*@
+            @ViewBag.Currency ▾
+            @*</div>*@
+            <br />
+            <span class="arrow"></span>
+            <div>
+                <div class="currency-dropdown-content">
+                    @foreach (var currency in Model.SupportedCurrencies)
+                    {
+                    <div class="currency">
+                        <a href="/@currency.Key/">
+                            <div style="background-image:url(/images/icons/@(currency.Key).png)" class="currency-flag"></div>
+                            @currency.Value
+                        </a>
+
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @*<script>
+            function test() {
+                var el = document.getElementById('currency-options');
+                var text = el.options[el.selectedIndex].innerHTML;
+                document.getElementById("currency").value = text ;
+            }
+        </script>
+        <script>
+            document.getElementById("currency-options").addEventListener("change", () => {
+                document.getElementById("currency-switcher").submit();
+            });
+        </script>*@

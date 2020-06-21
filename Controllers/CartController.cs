@@ -8,59 +8,65 @@ using MShop.Helpers;
 using MySql.Data.MySqlClient;
 using dto = MShop.Models;
 using MShop;
+using System.Globalization;
 
 namespace MShop.Controllers
 {
-    [Route("cart")]
+
     public class CartController : Controller
     {
-        [Route("index")]
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string culture, string currency)
         {
-            var cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart");
-            if (cart == null) cart = new List<ShoppingCartItemModel>();
-
-            ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(ShoppingCartItem => ShoppingCartItem.Product.ProductPrice * ShoppingCartItem.Quantity);
-            return View();
+            return this.View();
         }
 
-        [Route("buy/{id}")]
-        public IActionResult Buy(int id, int quantity)
+        [Route("cart/buy/{id}")]
+        public IActionResult Buy(int id, int quantity, bool setQuantity = false)
         {
             System.Diagnostics.Debug.WriteLine("id:" + id + "; quantity: " + quantity);
             ProductModel product = new ProductModel();
+            List<ShoppingCartItemModel> cart = new List<ShoppingCartItemModel>();
             if (SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart") == null)
             {
-                List<ShoppingCartItemModel> cart = new List<ShoppingCartItemModel>();
+                
                 cart.Add(new ShoppingCartItemModel { Product = GetProduct(id), Quantity = quantity });
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
             {
-                List<ShoppingCartItemModel> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart");
+                cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart");
                 int index = isExist(id);
                 if (index != -1)
                 {
-                    cart[index].Quantity += quantity;
+                    cart[index].Quantity = (setQuantity == true) ? quantity : cart[index].Quantity + quantity;
+
                 }
                 else
                 {
                     cart.Add(new ShoppingCartItemModel { Product = GetProduct(id), Quantity = quantity });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+                
             }
+            int cartTotal = 0;
+            cartTotal = cart.Sum(item => item.Quantity);
+            HttpContext.Session.SetInt32("CartCount", cartTotal);
+
+
             return RedirectToAction("Index");
+
         }
 
-        [Route("remove/{id}")]
-        public IActionResult Remove(int id)
+        [Route("cart/remove/{id}")]
+        public IActionResult Remove(int id ,string culture, string currency)
         {
             List<ShoppingCartItemModel> cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart");
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { Culture = culture, Currency = currency });
         }
 
         private int isExist(int id)
@@ -109,6 +115,30 @@ namespace MShop.Controllers
                     ret = t;
                 }
             return ret;
+        }
+
+        [Route("{culture}/cart/GetCart")]
+        public IActionResult GetShoppingCartViewComponent()
+        {
+            return ViewComponent("ShoppingCart");
+        }
+
+        [Route("cart/GetCartTotal")]
+        [HttpPost]
+        public JsonResult GetCartTotal()
+        {
+            int cartTotal = 0;
+            List<ShoppingCartItemModel> cart = new List<ShoppingCartItemModel>();
+
+            cart = SessionHelper.GetObjectFromJson<List<ShoppingCartItemModel>>(HttpContext.Session, "cart");
+            
+            cartTotal=cart.Sum(item => item.Quantity);
+            HttpContext.Session.SetInt32("CartCount", cartTotal);
+
+            System.Diagnostics.Debug.WriteLine("Cart Total: " + Json(new { cartTotal }).ToString());
+
+            return Json(new { cartTotal });
+
         }
 
     }
