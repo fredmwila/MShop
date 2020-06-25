@@ -11,7 +11,7 @@
                     @foreach (var currency in Model.SupportedCurrencies)
                     {
                     <div class="currency">
-                        <a href="/@currency.Key/">
+                        <a href="/@currency.Key/@ViewBag.CurrentURL">
                             <div style="background-image:url(/images/icons/@(currency.Key).png)" class="currency-flag"></div>
                             @currency.Value
                         </a>

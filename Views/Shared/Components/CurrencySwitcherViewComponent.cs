@@ -30,6 +30,10 @@ namespace MShop.View.Shared.Component
 
             ViewBag.Currency = MShopClass.getCurrency(culture);
             ViewBag.Culture = culture;
+
+            string path = HttpContext.Request.Path;
+
+            ViewBag.CurrentURL = (path.Length > 7)? path.Substring(7):"";
             //culture = MShopClass.currencyList()[currency.ToUpper()];
 
             CurrencyModel currentCurrencyModel = new CurrencyModel { Currency = currency, CurrencyCulture = culture };
